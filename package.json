@@ -1,0 +1,23 @@
+{
+  "name": "graphqlserver",
+  "version": "1.0.0",
+  "description": "GraphQL Server",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc",
+    "start": "npm run compile && nodemon ./dist/src/index.js"
+  },
+  "keywords": [],
+  "author": "Omar Ghandour",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@apollo/server": "^4.10.2",
+    "graphql": "^16.8.1",
+    "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.4",
+    "typescript": "^5.4.3"
+  }
+}
