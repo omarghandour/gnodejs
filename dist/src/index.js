@@ -30,17 +30,21 @@ type Game {
     id: ID!
     title: String!
     platform: [String!]!
+    reviews: [Review!]
 }
 
 type Review {
     id: ID!,
     rating: Int!
     content: String!
+    game: Game!
+    author: Author!
 }
 type Author {
     id: ID!
     name: String!
     Verified: Boolean!
+    reviews: [Review!]
 }
 
 type Query {
@@ -61,6 +65,24 @@ const resolvers = {
         game: (_, args) => games.find((game) => game.id === args.id),
         author: (_, args) => authors.find((author) => author.id === args.id),
     },
+    Game: {
+        reviews(parent) {
+            return reviews.filter((r) => r.id === parent.id);
+        },
+    },
+    Author: {
+        reviews(parent) {
+            return reviews.filter((r) => r.author_id === parent.id);
+        },
+    },
+    Review: {
+        game(parent) {
+            return games.find((g) => g.id === parent.game_id);
+        },
+        author(parent) {
+            return authors.find((a) => a.id === parent.author_id);
+        },
+    },
 };
 // server setup
 const server = new ApolloServer({
@@ -71,4 +93,4 @@ const server = new ApolloServer({
 const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
 });
-console.log("Server is ready at port", 3000);
+console.log("Server is ready at port", 4000);
